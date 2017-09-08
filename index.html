@@ -172,69 +172,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1509/15/c0/12692805_1442327717260_800x600.jpg" alt="image"></p>
-<h2 id="前端常用属性、方法"><a href="#前端常用属性、方法" class="headerlink" title="前端常用属性、方法"></a>前端常用属性、方法</h2><p>在开发的过程中，总会遇到各种问题，需要各种的方法来解决，可是第一次解决之后不久后就忘记了（我就是这样），所以我对网上常用的方法进行了总结，以后再用的时候，就可直接拿来用了。</p>
-<p>参考文档：<a href="http://justyeh.com/post/28" title="JustYeh的前端博客" target="_blank" rel="external">JustYeh的前端博客</a></p>
-<h3 id="文本溢出省略符"><a href="#文本溢出省略符" class="headerlink" title="文本溢出省略符"></a>文本溢出省略符</h3><pre><code>`.text-ellipsis{
-    overflow:hidden;
-    text-overflow:ekkipsis;
-    white-space:nowrap;
-}`
-</code></pre><h3 id="禁止文本选中"><a href="#禁止文本选中" class="headerlink" title="禁止文本选中"></a>禁止文本选中</h3><p>IE6-9不支持该属性，但支持使用标签属性 onselectstart=”return false;”来达到user-select:none 的效果；</p>
-<pre><code>`.noselect {
-    -webkit-user-select: none;  /* Chrome all / Safari  all /opera15+*/  
-    -moz-user-select: none;     /* Firefox all */  
-    -ms-user-select: none;      /* IE 10+ */  
-     user-select: none;  
-}`
-</code></pre><h3 id="返回顶部"><a href="#返回顶部" class="headerlink" title="返回顶部"></a>返回顶部</h3><pre><code>`&lt;a href=&quot;#top&quot;&gt;返回顶部&lt;/a&gt;`
-</code></pre><h3 id="打电话"><a href="#打电话" class="headerlink" title="打电话"></a>打电话</h3><pre><code>`&lt;a href=&quot;tel:4008099177&quot; class=&quot;cliack_before&quot;&gt;联系客服&lt;/a&gt;`
-</code></pre><h3 id="跳转下载APP"><a href="#跳转下载APP" class="headerlink" title="跳转下载APP"></a>跳转下载APP</h3><pre><code>`var ua = window.navigator.userAgent.toLowerCase();  
-            //微信  
-            if(ua.match(/MicroMessenger/i) == &apos;micromessenger&apos;){  
-                window.location.href=&apos;&apos;;  
-            }else{//非微信浏览器  
-                if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {  
-                    var loadDateTime = new Date();  
-                    window.setTimeout(function() {  
-                        var timeOutDateTime = new Date();  
-                        if (timeOutDateTime - loadDateTime &lt; 5000) {  
-                            window.location = &quot;&quot;;//ios下载地址  
-                        } else {  
-                        window.close();  
-                        }  
-                    },25);  
-                    window.location = &quot;schema://&quot;;  
-                  }else if (navigator.userAgent.match(/android/i)) {  
-                    var state = null;  
-                    try {  
-                        window.location = &apos;schema://&apos;;  
-                        setTimeout(function(){  
-                            window.location= &quot;&quot;; //android下载地址  
-
-                        },500);  
-                    } catch(e) {}  
-                }  
-            } `
-</code></pre><h3 id="刷新当前页面，以及操作历史记录"><a href="#刷新当前页面，以及操作历史记录" class="headerlink" title="刷新当前页面，以及操作历史记录"></a>刷新当前页面，以及操作历史记录</h3><pre><code>`1，history.go(0) 
-    location.reload() 
-    location=location 
-    location.assign(location) 
-    document.execCommand(&apos;Refresh&apos;) 
-    window.navigate(location) 
-    location.replace(location) 
-    document.URL=location.href
-`
-</code></pre><p>这篇文章不错：<a href="http://www.jb51.net/article/14397.htm" title="js刷新页面方法大全" target="_blank" rel="external">js刷新页面方法大全</a></p>
-<h3 id="刷新当前页面，以及操作历史记录-1"><a href="#刷新当前页面，以及操作历史记录-1" class="headerlink" title="刷新当前页面，以及操作历史记录"></a>刷新当前页面，以及操作历史记录</h3><pre><code>`1，history.go(0) 
-    location.reload() 
-    location=location 
-    location.assign(location) 
-    document.execCommand(&apos;Refresh&apos;) 
-    window.navigate(location) 
-    location.replace(location) 
-    document.URL=location.href
-`
-</code></pre>
+<h2 id="前端常用属性、方法"><a href="#前端常用属性、方法" class="headerlink" title="前端常用属性、方法"></a>前端常用属性、方法</h2><p>在开发的过程中，总会遇到各种问题，需要各种的方法来解决，可是第一次解决之后不久后就忘记了（我就是这样），所以我对网上常用的方法进行了总结，以后再用的时候，就可直接拿来用了。<br>
+        
+          <a class="article-more-a" href="/2017/09/08/常用黑科技/#more"></a>
+        
       
 
       

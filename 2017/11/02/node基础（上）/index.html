@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
-  <title>Archives | HongJ前端博客</title>
+  <title>node 基础（上） | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HongJ前端博客">
-<meta property="og:url" content="http://hongj.top/archives/index.html">
+  <meta name="description" content="#小技巧——使用 supervisor# supervisor 可以帮助你实现这个功能，它会监视你对代码的改动，并自动重启 Node.js。 使用方法很简单，首先使用 npm 安装 supervisor：">
+<meta name="keywords" content="node开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node 基础（上）">
+<meta property="og:url" content="http://hongj.top/2017/11/02/node基础（上）/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
+<meta property="og:description" content="#小技巧——使用 supervisor# supervisor 可以帮助你实现这个功能，它会监视你对代码的改动，并自动重启 Node.js。 使用方法很简单，首先使用 npm 安装 supervisor：">
+<meta property="og:image" content="http://www.lizhi1314.net/upFiles/infoImg/coll/20160724/OT20160724135907684.jpg">
+<meta property="og:updated_time" content="2017-11-02T08:52:31.088Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HongJ前端博客">
+<meta name="twitter:title" content="node 基础（上）">
+<meta name="twitter:description" content="#小技巧——使用 supervisor# supervisor 可以帮助你实现这个功能，它会监视你对代码的改动，并自动重启 Node.js。 使用方法很简单，首先使用 npm 安装 supervisor：">
+<meta name="twitter:image" content="http://www.lizhi1314.net/upFiles/infoImg/coll/20160724/OT20160724135907684.jpg">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
   
@@ -149,36 +156,329 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-node基础（上）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/02/node基础（上）/" class="archive-article-date">
-  	<time datetime="2017-11-02T08:54:00.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-02</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/02/node基础（上）/">node 基础（上）</a>
+    <h1 class="article-title" itemprop="name">
+      node 基础（上）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/11/02/node基础（上）/" class="archive-article-date">
+  	<time datetime="2017-11-02T08:54:00.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://www.lizhi1314.net/upFiles/infoImg/coll/20160724/OT20160724135907684.jpg" alt="image"></p>
+<p>#小技巧——使用 supervisor#</p>
+<p>supervisor 可以帮助你实现这个功能，它会监视你对代码的改动，并自动重启 Node.js。</p>
+<p>使用方法很简单，首先使用 npm 安装 supervisor：</p>
+<a id="more"></a>
+<p>$ npm install -g supervisor</p>
+<p>如果你使用的是 Linux 或 Mac，直接键入上面的命令很可能会有权限错误。原因是 npm</p>
+<p>需要把 supervisor 安装到系统目录，需要管理员授权，可以使用  sudo npm install -g</p>
+<p>supervisor 命令来安装。</p>
+<p>接下来，使用 supervisor 命令启动 app.js：</p>
+<p>$ supervisor app.js</p>
+<p>#异步式 I/O 与事件式编程 #</p>
+<h2 id="同步式-I-O（Synchronous-I-O）或阻塞式-I-O"><a href="#同步式-I-O（Synchronous-I-O）或阻塞式-I-O" class="headerlink" title="同步式 I/O（Synchronous I/O）或阻塞式 I/O:"></a>同步式 I/O（Synchronous I/O）或阻塞式 I/O:</h2><p>线程在执行中如果遇到磁盘读写或网络通信（统称为 I/O 操作），</p>
+<p>通常要耗费较长的时间，这时操作系统会剥夺这个线程的 CPU 控制权，使其暂停执行，同</p>
+<p>时将资源让给其他的工作线程，这种线程调度方式称为 阻塞。当 I/O 操作完毕时，操作系统</p>
+<p>将这个线程的阻塞状态解除，恢复其对CPU的控制权，令其继续执行。</p>
+<h2 id="异步式-I-O-（Asynchronous-I-O）或非阻塞式-I-O-（Non-blocking-I-O）"><a href="#异步式-I-O-（Asynchronous-I-O）或非阻塞式-I-O-（Non-blocking-I-O）" class="headerlink" title="异步式 I/O （Asynchronous I/O）或非阻塞式 I/O （Non-blocking I/O）"></a>异步式 I/O （Asynchronous I/O）或非阻塞式 I/O （Non-blocking I/O）</h2><p>当线程遇到 I/O 操作时，不会以阻塞的方式等待 I/O 操作</p>
+<p>的完成或数据的返回，而只是将 I/O 请求发送给操作系统，继续执行下一条语句。当操作</p>
+<p>系统完成 I/O 操作时，以事件的形式通知执行 I/O 操作的线程，线程会在特定时候处理这个</p>
+<p>事件。为了处理异步 I/O，线程必须有事件循环，不断地检查有没有未处理的事件，依次予</p>
+<p>以处理。</p>
+<h2 id="EventEmitter"><a href="#EventEmitter" class="headerlink" title="EventEmitter"></a>EventEmitter</h2><p>(发布订阅)<br>    `//event.js</p>
+<pre><code>var EventEmitter = require(&apos;events&apos;).EventEmitter;
+
+var event = new EventEmitter();
+
+event.on(&apos;some_event&apos;, function() {
+
+console.log(&apos;some_event occured.&apos;);
+
+});
+setTimeout(function() {
+
+event.emit(&apos;some_event&apos;);
+
+}, 1000);`
+</code></pre><p>运行这段代码，1秒后控制台输出了 some_event occured. 。其原理是  event  对象</p>
+<p>注册了事件  some_event  的一个监听器，然后我们通过  setTimeout  在1000毫秒以后向</p>
+<p>event  对象发送事件  some_event ，此时会调用 some_event 的监听器</p>
+<p>#CommonJS 规范的包应该具备以下特征 #</p>
+<p> package.json 必须在包的顶层目录下；</p>
+<p>  二进制文件应该在 bin 目录下；</p>
+<p>  JavaScript 代码应该在 lib 目录下；</p>
+<p>  文档应该在 doc 目录下；</p>
+<p>  单元测试应该在 test 目录下。</p>
+<h1 id="Node-js-包管理器"><a href="#Node-js-包管理器" class="headerlink" title="Node.js 包管理器"></a>Node.js 包管理器</h1><h2 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h2><p>package.json 是 CommonJS 规定的用来描述包的文件，完全符合规范的 package.json 文</p>
+<p>件应该含有以下字段。</p>
+<p>  name ：包的名称，必须是唯一的，由小写英文字母、数字和下划线组成，不能包含空格。</p>
+<p>  description ：包的简要说明。</p>
+<p>  version ：符合语义化版本识别</p>
+<p>① 规范的版本字符串。</p>
+<p>  keywords ：关键字数组，通常用于搜索。</p>
+<p>  maintainers ：维护者数组，每个元素要包含 name 、 email （可选）、 web （可选）字段。</p>
+<p>  contributors ：贡献者数组，格式与 maintainers 相同。包的作者应该是贡献者数组的第一个元素。</p>
+<p>  bugs ：提交bug的地址，可以是网址或者电子邮件地址。</p>
+<p>  licenses ：许可证数组，每个元素要包含 type （许可证的名称）和  url （链接到</p>
+<p>许可证文本的地址）字段。</p>
+<p>  repositories ：仓库托管地址数组，每个元素要包含 type  （仓库的类型，如  git ）、</p>
+<p>url （仓库的地址）和  path （相对于仓库的路径，可选）字段。</p>
+<p>  dependencies ：包的依赖，一个关联数组，由包名称和版本号组成。</p>
+<h2 id="1-获取一个包"><a href="#1-获取一个包" class="headerlink" title="1. 获取一个包"></a>1. 获取一个包</h2><p>使用 npm 安装包的命令格式为：<br>npm [install/i] [package_name]</p>
+<p>例如你要安装 express ，可以在命令行运行：</p>
+<p>$ npm install express</p>
+<p>或者：</p>
+<p>$ npm i express</p>
+<p>默认情况下我们使用  npm</p>
+<p>install 命令就是采用本地模式，即把包安装到当前目录的 node_modules 子目录下。Node.js</p>
+<p>的  require 在加载模块时会尝试搜寻 node_modules 子目录，因此使用 npm 本地模式安装</p>
+<p>的包可以直接被引用。</p>
+<p>npm 还有另一种不同的安装模式被成为全局模式，使用方法为：</p>
+<p>npm [install/i] -g [package_name]</p>
+<h2 id="包的发布"><a href="#包的发布" class="headerlink" title="包的发布"></a>包的发布</h2><p>创建一个名为 byvoidmodule 的目录，然后在这个</p>
+<p>目录中运行 npm init ：</p>
+<p>这样就在 byvoidmodule 目录中生成一个符合 npm 规范的 package.json 文件。创建一个</p>
+<p>index.js 作为包的接口，一个简单的包就制作完成了。</p>
+<p>在发布前，我们还需要获得一个账号用于今后维护自己的包，使用  npm adduser  根据</p>
+<p>提示输入用户名、密码、邮箱，等待账号创建完成。完成后可以使用  npm whoami  测验是<br>否已经取得了账号。</p>
+<p>接下来，在 package.json 所在目录下运行 npm publish ，稍等片刻就可以完成发布了。</p>
+<p>打开浏览器，访问 <a href="http://search.npmjs.org/" target="_blank" rel="external">http://search.npmjs.org/</a> 就可以找到自己刚刚发布的包了。现在我们可以在</p>
+<p>世界的任意一台计算机上使用  npm install byvoidmodule  命令来安装它。图3-6 是npmjs.</p>
+<p>org上包的描述页面。</p>
+<p>如果你的包将来有更新，只需要在 package.json 文件中修改  version  字段，然后重新</p>
+<p>使用 npm publish 命令就行了。如果你对已发布的包不满意（比如我们发布的这个毫无意</p>
+<p>义的包），可以使用  npm unpublish 命令来取消发布。</p>
+<h1 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h1><h2 id="命令行调试"><a href="#命令行调试" class="headerlink" title="命令行调试"></a>命令行调试</h2><p>Node.js 支持命令行下的单步调试。下面是一个简单的程序：</p>
+<pre><code>    ` 
+    var a = 1;
+
+    var b = &apos;world&apos;;
+
+    var c = function(x) {
+
+    console.log(&apos;hello &apos; + x + a);
+
+    };
+
+    c(b);
+`
+</code></pre><p>在命令行下执行 node debug debug.js ，将会启动调试工具：</p>
+<h2 id="使用-node-inspector-调试-Node-js"><a href="#使用-node-inspector-调试-Node-js" class="headerlink" title="使用 node-inspector 调试 Node.js"></a>使用 node-inspector 调试 Node.js</h2><p>大部分基于 Node.js 的应用都是运行在浏览器中的，例如强大的调试工具 node-inspector。</p>
+<p>node-inspector 是一个完全基于 Node.js 的开源在线调试工具，提供了强大的调试功能和友好<br>的用户界面，它的使用方法十分简便。</p>
+<p>首先，使用  npm install -g node-inspector  命令安装 node-inspector，然后在终</p>
+<p>端中通过 node –debug-brk=5858 debug.js  命令连接你要除错的脚本的调试服务器，</p>
+<p>启动 node-inspector：</p>
+<p>$ node-inspector</p>
+<p>在浏览器中打开 <a href="http://127.0.0.1:8080/debug?port=5858" target="_blank" rel="external">http://127.0.0.1:8080/debug?port=5858</a> ， 即可显示出优雅的 Web 调试工</p>
+<p>图3-19 node-inspector</p>
+<p>node-inspector 的使用方法十分简单，和浏览器脚本调试工具一样，支持单步、断点、</p>
+<p>调用栈帧查看等功能。无论你以前有没有使用过调试工具，都可以在几分钟以内轻松掌握。</p>
+<h1 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h1><h2 id="process"><a href="#process" class="headerlink" title="process"></a>process</h2><p>  process.argv 是命令行参数数组，第一个元素是 node， 第二个元素是脚本文件名，<br>从第三个元素开始每个元素是一个运行参数。</p>
+<p>console.log(process.argv);</p>
+<p>将以上代码存储为 argv.js，通过以下命令运行：</p>
+<p>$ node argv.js 1991 name=byvoid –v “Carbo Kuo”<br>[ ‘node’,<br>‘/home/byvoid/argv.js’,<br>‘1991’,<br>‘name=byvoid’,<br>‘–v’,<br>‘Carbo Kuo’ ]</p>
+<p>  process.stdout 是标准输出流，通常我们使用的  console.log() 向标准输出打印</p>
+<p>字符，而  process.stdout.write() 函数提供了更底层的接口。</p>
+<p>  process.stdin 是标准输入流，初始时它是被暂停的，要想从标准输入读取数据，</p>
+<p>你必须恢复流，并手动编写流的事件响应函数。</p>
+<p>process.stdin.resume();</p>
+<p>process.stdin.on(‘data’, function(data) {</p>
+<p>process.stdout.write(‘read from console: ‘ + data.toString());</p>
+<p>});</p>
+<p>  process.nextTick(callback) 的功能是为事件循环设置一项任务，Node.js 会在</p>
+<p>下次事件循环调响应时调用  callback 。</p>
+<p>我们假设 compute() 和 somethingComplicated() 是两个较为耗时的函数，以上</p>
+<p>的程序在调用  doSomething()  时会先执行 somethingComplicated() ，然后立即调用</p>
+<p>回调函数，在  onEnd()  中又会执行  compute() 。下面用 process.nextTick()  改写上</p>
+<p>面的程序：</p>
+<pre><code>`function doSomething(args, callback) {
+
+somethingComplicated(args);
+
+process.nextTick(callback);
+
+}
+
+doSomething(function onEnd() {
+
+compute();
+
+});`
+</code></pre><p>改写后的程序会把上面耗时的操作拆分为两个事件，减少每个事件的执行时间，提高事件响应速度。</p>
+<h1 id="常用工具-util"><a href="#常用工具-util" class="headerlink" title="常用工具  util"></a>常用工具  util</h1><p><strong>1、util.inherits(constructor, superConstructor) 是一个实现对象间原型继承的函数。</strong></p>
+<pre><code>`
+    var util = require(&apos;util&apos;);
+    function Base() {
+        this.name = &apos;base&apos;;
+        this.base = 1991;
+        this.sayHello = function() {
+        console.log(&apos;Hello &apos; + this.name);
+        };
+    }
+    Base.prototype.showName = function() {
+    console.log(this.name);
+    };
+    function Sub() {
+      this.name = &apos;sub&apos;;
+    }
+    util.inherits(Sub, Base);
+    var objBase = new Base();
+    objBase.showName();
+    objBase.sayHello();
+    console.log(objBase);
+    var objSub = new Sub();
+    objSub.showName();
+    //objSub.sayHello();
+    console.log(objSub);
+
+`
+</code></pre><p>我们定义了一个基础对象 Base 和一个继承自 Base  的 Sub ， Base 有三个在构造函数</p>
+<p>内定义的属性和一个原型中定义的函数，通过 util.inherits  实现继承。运行结果如下：</p>
+<p>base<br>Hello base<br>{ name: ‘base’, base: 1991, sayHello: [Function] }<br>sub<br>{ name: ‘sub’ }</p>
+<p><strong>注意， </strong><br>Sub  仅仅继承了 Base  在原型中定义的函数，而构造函数内部创造的  base  属</p>
+<p>性和  sayHello  函数都没有被  Sub  继承。同时，在原型中定义的属性不会被 console.log 作</p>
+<p>为对象的属性输出。如果我们去掉  objSub.sayHello(); 这行的注释，将会看到报错！！</p>
+<p><strong>2、til.inspect(object,[showHidden],[depth],[colors])</strong> </p>
+<p>是一个将任意对象转换</p>
+<p>为字符串的方法，通常用于调试和错误输出。它至少接受一个参数  object ，即要转换的对象。</p>
+<h1 id="事件驱动-events"><a href="#事件驱动-events" class="headerlink" title="事件驱动  events"></a>事件驱动  events</h1><h2 id="事件发射器"><a href="#事件发射器" class="headerlink" title="事件发射器"></a>事件发射器</h2><p>  EventEmitter.on(event, listener)  为指定事件注册一个监听器，接受一个字<br>符串  event  和一个回调函数  listener 。</p>
+<p>  EventEmitter.emit(event, [arg1], [arg2], […]) 发射  event  事件，传<br>递若干可选参数到事件监听器的参数表。</p>
+<p>  EventEmitter.once(event, listener)  为指定事件注册一个单次监听器，即<br>监听器最多只会触发一次，触发后立刻解除该监听器。</p>
+<p>  EventEmitter.removeListener(event, listener) 移除指定事件的某个监听<br>器， listener  必须是该事件已经注册过的监听器。</p>
+<p>  EventEmitter.removeAllListeners([event]) 移除所有事件的所有监听器，<br>如果指定  event ，则移除指定事件的所有监听器。</p>
+<h2 id="error-事件"><a href="#error-事件" class="headerlink" title="error 事件"></a>error 事件</h2><p>EventEmitter 定义了一个特殊的事件  error ，它包含了“错误”的语义，我们在遇到<br>异常的时候通常会发射  error  事件。当  error 被发射时， EventEmitter 规定如果没有响<br>应的监听器，Node.js 会把它当作异常，退出程序并打印调用栈。我们一般要为会发射  error<br>事件的对象设置监听器，避免遇到错误后整个程序崩溃。例如：<br>    `</p>
+<pre><code>   var events = require(&apos;events&apos;);
+
+   var emitter = new events.EventEmitter();
+
+    emitter.emit(&apos;error&apos;);
+
+`
+</code></pre><h2 id="继承-EventEmitter"><a href="#继承-EventEmitter" class="headerlink" title="继承  EventEmitter"></a>继承  EventEmitter</h2><p>大多数时候我们不会直接使用 EventEmitter ，而是在对象中继承它。包括  fs 、 net 、<br>http 在内的，只要是支持事件响应的核心模块都是  EventEmitter 的子类。</p>
+<p>为什么要这样做呢？原因有两点。首先，具有某个实体功能的对象实现事件符合语义，<br>事件的监听和发射应该是一个对象的方法。其次 JavaScript 的对象机制是基于原型的，支持<br>部分多重继承，继承  EventEmitter 不会打乱对象原有的继承关系。</p>
+<h1 id="HTTP-服务器与客户端"><a href="#HTTP-服务器与客户端" class="headerlink" title="HTTP 服务器与客户端"></a>HTTP 服务器与客户端</h1><h2 id="HTTP-服务器"><a href="#HTTP-服务器" class="headerlink" title="HTTP 服务器"></a>HTTP 服务器</h2><p><strong>1.  http.Server 的事件</strong></p>
+<p>http.Server 是一个基于事件的 HTTP 服务器，所有的请求都被封装为独立的事件，<br>开发者只需要对它的事件编写响应函数即可实现 HTTP 服务器的所有功能。它继承自<br>EventEmitter ，提供了以下几个事件：</p>
+<p>  request ：当客户端请求到来时，该事件被触发，提供两个参数  req  和 res ，分别是<br>http.ServerRequest 和  http.ServerResponse  的实例，表示请求和响应信息。</p>
+<p>  connection ：当 TCP 连接建立时，该事件被触发，提供一个参数  socket ，为<br>net.Socket 的实例。 connection 事件的粒度要大于  request ，因为客户端在<br>Keep-Alive 模式下可能会在同一个连接内发送多次请求。</p>
+<p>  close ：当服务器关闭时，该事件被触发。注意不是在用户连接断开时。</p>
+<p>除此之外还有  checkContinue 、 upgrade 、 clientError 事件，通常我们不需要关<br>心，只有在实现复杂的 HTTP 服务器的时候才会用到。</p>
+<p><strong>2.  http.ServerRequest</strong></p>
+<p>http.ServerRequest  是 HTTP 请求的信息，是后端开发者最关注的内容。它一般由<br>http.Server 的  request 事件发送，作为第一个参数传递，通常简称  request 或  req 。</p>
+<p>HTTP 请求一般可以分为两部分：请求头（Request Header）和请求体（Requset Body）。</p>
+<p>以上内容由于长度较短都可以在请求头解析完成后立即读取。而请求体可能相对较长，<br>需要一定的时间传输，因此  http.ServerRequest  提供了以下3个事件用于控制请求体<br>传输。</p>
+<p>  data ：当请求体数据到来时，该事件被触发。该事件提供一个参数  chunk ，表示接<br>收到的数据。如果该事件没有被监听，那么请求体将会被抛弃。该事件可能会被调<br>用多次。</p>
+<p>  end ：当请求体数据传输完成时，该事件被触发，此后将不会再有数据到来。</p>
+<p>  close ： 用户当前请求结束时，该事件被触发。不同于  end ，如果用户强制终止了<br>传输，也还是调用 close 。<br> <strong>3、http.ServerResponse</strong></p>
+<p>http.ServerResponse  是返回给客户端的信息，决定了用户最终能看到的结果。它<br>也是由  http.Server 的  request  事件发送的，作为第二个参数传递，一般简称为<br>response 或  res 。</p>
+<p>http.ServerResponse 有三个重要的成员函数，用于返回响应头、响应内容以及结束<br>请求。</p>
+<p>  response.writeHead(statusCode, [headers]) ：向请求的客户端发送响应头。<br>statusCode  是 HTTP 状态码，如 200 （请求成功）、404 （未找到）等。 headers<br>是一个类似关联数组的对象，表示响应头的每个属性。该函数在一个请求内最多只<br>能调用一次，如果不调用，则会自动生成一个响应头。</p>
+<p>  response.write(data, [encoding]) ：向请求的客户端发送响应内容。 data 是<br>一个  Buffer 或字符串，表示要发送的内容。如果  data 是字符串，那么需要指定<br>encoding 来说明它的编码方式，默认是 utf-8 。在 response.end 调用之前，<br>response.write  可以被多次调用。</p>
+<p>  response.end([data], [encoding]) ：结束响应，告知客户端所有发送已经完<br>成。当所有要返回的内容发送完毕的时候，该函数 必须 被调用一次。它接受两个可<br>选参数，意义和 response.write  相同。如果不调用该函数，客户端将永远处于<br>等待状态</p>
+<h2 id="HTTP-客户端"><a href="#HTTP-客户端" class="headerlink" title="HTTP 客户端"></a>HTTP 客户端</h2><p>http  模块提供了两个函数  http.request  和  http.get ，功能是作为客户端向 HTTP<br>服务器发起请求。</p>
+<h2 id="http-request-options-callback"><a href="#http-request-options-callback" class="headerlink" title="http.request(options, callback)"></a>http.request(options, callback)</h2><p>发起 HTTP 请求。接受两个参数， option 是<br>一个类似关联数组的对象，表示请求的参数， callback 是请求的回调函数。 option<br>常用的参数如下所示。</p>
+<p>  host ：请求网站的域名或 IP 地址。</p>
+<p>  port ：请求网站的端口，默认 80。</p>
+<p>  method ：请求方法，默认是 GET。</p>
+<p>  path ：请求的相对于根的路径，默认是“ / ”。 QueryString  应该包含在其中。<br>例如  /search?query=byvoid 。</p>
+<p>  headers ：一个关联数组对象，为请求头的内容。</p>
+<p>callback  传递一个参数，为 http.ClientResponse 的实例。<br>http.request  返回一个  http.ClientRequest 的实例。<br>下面是一个通过 http.request  发送 POST 请求的代码：</p>
+<pre><code>`
+var http = require(&apos;http&apos;);
+var querystring = require(&apos;querystring&apos;);
+var contents = querystring.stringify({
+name: &apos;byvoid&apos;,
+email: &apos;byvoid@byvoid.com&apos;,
+address: &apos;Zijing 2#, Tsinghua University&apos;,
+});
+var options = {
+host: &apos;www.byvoid.com&apos;,
+path: &apos;/application/node/post.php&apos;,
+method: &apos;POST&apos;,
+headers: {
+&apos;Content-Type&apos;: &apos;application/x-www-form-urlencoded&apos;,
+&apos;Content-Length&apos; : contents.length
+}
+};
+var req = http.request(options, function(res) {
+res.setEncoding(&apos;utf8&apos;);
+res.on(&apos;data&apos;, function (data) {
+console.log(data);
+});
+});
+req.write(contents);
+req.end();
+运行后结果如下：
+array(3) {
+[&quot;name&quot;]=&gt;
+string(6) &quot;byvoid&quot;
+[&quot;email&quot;]=&gt;
+string(17) &quot;byvoid@byvoid.com&quot;
+[&quot;address&quot;]=&gt;
+string(30) &quot;Zijing 2#, Tsinghua University&quot;
+}
+`
+</code></pre><h2 id="http-get-options-callback-http"><a href="#http-get-options-callback-http" class="headerlink" title="http.get(options, callback) http"></a>http.get(options, callback) http</h2><p>模块还提供了一个更加简便的方法用于处<br>理GET请求： http.get 。它是  http.request 的简化版，唯一的区别在于 http.get<br>自动将请求方法设为了 GET 请求，同时不需要手动调用 req.end() 。</p>
+<pre><code>`
+    //httpget.js
+    var http = require(&apos;http&apos;);
+    http.get({host: &apos;www.byvoid.com&apos;}, function(res) {
+    res.setEncoding(&apos;utf8&apos;);
+    res.on(&apos;data&apos;, function (data) {
+    console.log(data);
+    });
+    });
+
+`
+</code></pre><p><strong>1.  http.ClientRequest</strong></p>
+<p>http.ClientRequest  是由  http.request 或  http.get 返回产生的对象，表示一<br>个已经产生而且正在进行中的 HTTP 请求。它提供一个  response  事件，即  http.request<br>或  http.get  第二个参数指定的回调函数的绑定对象。</p>
+<p><strong>2.  http.ClientResponse</strong></p>
+<p>http.ClientResponse 与  http.ServerRequest 相似，提供了三个事件  data 、 end<br>和  close ，分别在数据到达、传输结束和连接结束时触发，其中  data 事件传递一个参数<br>chunk ，表示接收到的数据。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinma.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -190,361 +490,125 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/31/浏览器的渲染原理简介/" class="archive-article-date">
-  	<time datetime="2017-10-31T06:33:49.446Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/31/浏览器的渲染原理简介/">浏览器的渲染原理简介</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2017/11/02/node基础（上）/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/25/setTimeout的总结/" class="archive-article-date">
-  	<time datetime="2017-10-25T08:04:23.613Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/31/浏览器的渲染原理简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">浏览器的渲染原理简介</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/25/setTimeout的总结/">setTImeout中的问题</a>
-    </h1>
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDcyMC83Mjc0">
+    <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+    </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/20/es6常用特性/" class="archive-article-date">
-  	<time datetime="2017-09-20T07:00:42.742Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/es6常用特性/">es6常用特性总结（一）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/fixed背景图固定兼容性bug/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:33:28.180Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/fixed背景图固定兼容性bug/">fixed背景图固定兼容性bug</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/三栏布局/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:19:12.745Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/三栏布局/">三栏布局</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/08/常用黑科技/" class="archive-article-date">
-  	<time datetime="2017-09-08T02:39:32.628Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/08/常用黑科技/">前端常用属性、方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/07/组件化/" class="archive-article-date">
-  	<time datetime="2017-09-07T01:13:24.760Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/07/组件化/">前端组件化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/06/模块化/" class="archive-article-date">
-  	<time datetime="2017-09-06T07:53:01.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/模块化/">前端模块化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/06/First-Artical/" class="archive-article-date">
-  	<time datetime="2017-09-06T04:00:48.214Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/First-Artical/">在路上</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -567,8 +631,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

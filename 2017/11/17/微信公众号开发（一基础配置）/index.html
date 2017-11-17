@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
-  <title>Archives | HongJ前端博客</title>
+  <title>微信公众号开发（一基础配置） | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HongJ前端博客">
-<meta property="og:url" content="http://hongj.top/archives/index.html">
+  <meta name="description" content="一、流程1、将本地域名暴露给外网。 1、起个本地服务。  2、下载node 模块  npm install -g localtunnel   在终端输入 lt –port 2131（启动服务的端口号）   会返回个  https://nywrxznpur.localtunnel.me">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信公众号开发（一基础配置）">
+<meta property="og:url" content="http://hongj.top/2017/11/17/微信公众号开发（一基础配置）/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
+<meta property="og:description" content="一、流程1、将本地域名暴露给外网。 1、起个本地服务。  2、下载node 模块  npm install -g localtunnel   在终端输入 lt –port 2131（启动服务的端口号）   会返回个  https://nywrxznpur.localtunnel.me">
+<meta property="og:image" content="http://up.enterdesk.com/edpic_source/ae/e1/db/aee1db69c1e7ceca03969303416acf52.jpg">
+<meta property="og:updated_time" content="2017-11-17T09:22:17.398Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HongJ前端博客">
+<meta name="twitter:title" content="微信公众号开发（一基础配置）">
+<meta name="twitter:description" content="一、流程1、将本地域名暴露给外网。 1、起个本地服务。  2、下载node 模块  npm install -g localtunnel   在终端输入 lt –port 2131（启动服务的端口号）   会返回个  https://nywrxznpur.localtunnel.me">
+<meta name="twitter:image" content="http://up.enterdesk.com/edpic_source/ae/e1/db/aee1db69c1e7ceca03969303416acf52.jpg">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
   
@@ -149,36 +156,131 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-微信公众号开发（一基础配置）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      微信公众号开发（一基础配置）
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/17/微信公众号开发（一基础配置）/" class="archive-article-date">
+
+        
+        <a href="/2017/11/17/微信公众号开发（一基础配置）/" class="archive-article-date">
   	<time datetime="2017-11-17T05:43:34.942Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-17</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/17/微信公众号开发（一基础配置）/">微信公众号开发（一基础配置）</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://up.enterdesk.com/edpic_source/ae/e1/db/aee1db69c1e7ceca03969303416acf52.jpg" alt="image"></p>
+<h1 id="一、流程"><a href="#一、流程" class="headerlink" title="一、流程"></a>一、流程</h1><h2 id="1、将本地域名暴露给外网。"><a href="#1、将本地域名暴露给外网。" class="headerlink" title="1、将本地域名暴露给外网。"></a>1、将本地域名暴露给外网。</h2><p> 1、起个本地服务。</p>
+<p> 2、下载node 模块<br>  npm install -g localtunnel</p>
+<p>  在终端输入 lt –port 2131（启动服务的端口号）</p>
+<p>  会返回个  <a href="https://nywrxznpur.localtunnel.me" target="_blank" rel="external">https://nywrxznpur.localtunnel.me</a><br><a id="more"></a></p>
+<p>3、本地服务demo<br>    `</p>
+<pre><code>        &apos;use strict&apos;
 
-        <div class="article-info info-on-right">
-          
+        const koa = require(&quot;koa&quot;);
+
+        const sha1 = require(&quot;sha1&quot;);
+
+        let config={
+
+          wechat:{
+
+            &quot;appId&quot;:&quot;wx0b9ac0bf33749291&quot;,
+
+            &quot;appsecret&quot;:&quot;cc9a53fb4d66bc088ec233b0a3f351f1&quot;,
+
+            &quot;token&quot;:&quot;lihongjielihongjie&quot;
+
+          }
+
+        };
+
+        let app = new koa ();
+
+        app.use(function *(next){
+
+            console.log(this.query)
+
+            let token=config.wechat.token;
+
+            let signature = this.query.signature;
+
+            let nonce = this.query.nonce;
+
+            let timestamp = this.query.timestamp;
+
+            let echostr = this.query.echostr;
+
+            let str=[token,timestamp,nonce].sort().join(&apos;&apos;)
+
+            let sha = sha1(str)
+
+        console.log(sha)
+
+            if(sha===signature){
+
+
+              this.body = echostr
+
+            }else{
+
+              this.body = &quot;wrong&quot;
+
+                  }
+
+        })
+
+        app.listen(80);
+
+        console.log(&quot;listen: 80&quot;)
+
+
+
+`
+</code></pre><p>4、将返回来的 url 粘贴到微信url验证那块。</p>
+<p>5、token是自己填的，可以随便填，相当于钥匙。</p>
+<p>6、点击提交就会看到配置成功了。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinma.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -190,364 +292,124 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（三）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:59:21.778Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（三）/">全栈项目填坑（三）</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2017/11/17/微信公众号开发（一基础配置）/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（二）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:40:25.805Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/10/全栈项目填坑（三）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">全栈项目填坑（三）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（二）/">全栈项目填坑（二）</a>
-    </h1>
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDcyMC83Mjc0">
+    <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+    </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（一）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:11:15.740Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（一）/">全栈项目填坑（一）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/02/node基础（上）/" class="archive-article-date">
-  	<time datetime="2017-11-02T08:54:00.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/02/node基础（上）/">node 基础（上）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">node开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/31/浏览器的渲染原理简介/" class="archive-article-date">
-  	<time datetime="2017-10-31T06:33:49.446Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/31/浏览器的渲染原理简介/">浏览器的渲染原理简介</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/25/setTimeout的总结/" class="archive-article-date">
-  	<time datetime="2017-10-25T08:04:23.613Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/25/setTimeout的总结/">setTImeout中的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/20/es6常用特性/" class="archive-article-date">
-  	<time datetime="2017-09-20T07:00:42.742Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/es6常用特性/">es6常用特性总结（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/fixed背景图固定兼容性bug/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:33:28.180Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/fixed背景图固定兼容性bug/">fixed背景图固定兼容性bug</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/三栏布局/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:19:12.745Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/三栏布局/">三栏布局</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -571,8 +433,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

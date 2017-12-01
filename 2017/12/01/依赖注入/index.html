@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="HongJ前端博客">
 <meta property="og:description" content="依赖注入1.初始化被依赖的模块如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了 2.注入到依赖模块中被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？ 有两种方式： . 自己去问 . 别人主动给你 没用依赖注入模式的话是1，用了之后就是2 想想，你需要某个东西的时候，你去找别人要，你需要提供别人什">
 <meta property="og:image" content="http://up.enterdesk.com/edpic_source/0f/2c/d2/0f2cd2eb5eaf3bcea18a0dfafd96cbca.jpg">
-<meta property="og:updated_time" content="2017-12-01T08:42:49.820Z">
+<meta property="og:updated_time" content="2017-12-01T08:45:55.285Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="依赖注入">
 <meta name="twitter:description" content="依赖注入1.初始化被依赖的模块如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了 2.注入到依赖模块中被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？ 有两种方式： . 自己去问 . 别人主动给你 没用依赖注入模式的话是1，用了之后就是2 想想，你需要某个东西的时候，你去找别人要，你需要提供别人什">
@@ -186,6 +186,7 @@
 <p>想想，你需要某个东西的时候，你去找别人要，你需要提供别人什么信息？最简单的就是那个东西叫什么，即你需要提供一个名称。</p>
 <p>所以，方式1的问题是：依赖模块耦合了被依赖模块的【名称】还有那个【别人】</p>
 <p>而方式2解决了这个问题，让依赖模块只依赖需要的模块的接口。</p>
+<a id="more"></a>
 <h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><pre><code>`
     var injector={
 
@@ -514,11 +515,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
+                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
               </li>
              
               <li class="article-tag-list-item">

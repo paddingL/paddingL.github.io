@@ -181,71 +181,9 @@
 <p>想想，你需要某个东西的时候，你去找别人要，你需要提供别人什么信息？最简单的就是那个东西叫什么，即你需要提供一个名称。</p>
 <p>所以，方式1的问题是：依赖模块耦合了被依赖模块的【名称】还有那个【别人】</p>
 <p>而方式2解决了这个问题，让依赖模块只依赖需要的模块的接口。</p>
-<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><pre><code>`
-    var injector={
-
-dependencies:{},//存储依赖
-
-register:function(key,value){
-
-    this.dependencies[key]=value
-
-   //注册
-},
-resolve:function(deps,func,scope){
-
-    var paramNames = this.getParamNames(func);//获取函数的参数
-
-    var params = [];
-
-        for (var i = 0; i &lt; paramNames.length; i++) {
-
-            let d = paramNames[i] 
-
-            let depen = this.dependencies[d] || deps[i] 
-
-            if (depen) { 
-
-                params.push(depen) 
-
-            } else { 
-
-                throw new Error(&apos;缺失的依赖：&apos; + d) 
-
-            }
-
-        }
-      return func.apply(scope || {}, params)
-
-     getParamNames: function (func) { // 获取方法的参数名字
-
-         var paramNames = func.toString().match(/^functions*[^(]*(s*([^)]*))/m)[1] 
-
-            paramNames = paramNames.replace(/ /g, &apos;&apos;) 
-
-            paramNames = paramNames.split(&apos;,&apos;) 
-
-            return paramNames
-
-        // Array }}
-
-}
-
-
-`
-</code></pre><p><strong>调用</strong></p>
-<p>//injector.register(‘notebook’, new Notebook()) // 注册notebook</p>
-<p>   //injector.register(‘pencil’, new Pencil()) // 注册pencilvar</p>
-<p>   //school = new School()  </p>
-<p>   //var student = new Student()// 以参数的形式传入school</p>
-<p>   //var studentWrite = injector.resolve([, , school], student.write, student)</p>
-<p>   //console.log(   studentWrite) // “我拥有School、Pencil和Notebook”</p>
-<p><strong>register</strong></p>
-<p>就是将依赖的模块加载到<strong>dependencies</strong>中。</p>
-<p><strong>resolve</strong></p>
-<p>就是通过获取回调函数的参数的名字，去dependencies匹配到正确的依赖。</p>
-<h1 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h1><p>调取函数的时候，其实就是在回调函数里面写需要执行的方法。</p>
-
+        
+          <a class="article-more-a" href="/2017/12/01/依赖注入/#more"></a>
+        
       
 
       
@@ -1113,11 +1051,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
+                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
               </li>
              
               <li class="article-tag-list-item">

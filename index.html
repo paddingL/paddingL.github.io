@@ -151,6 +151,153 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-依赖注入" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/01/依赖注入/">依赖注入</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/01/依赖注入/" class="archive-article-date">
+  	<time datetime="2017-12-01T08:42:49.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://up.enterdesk.com/edpic_source/0f/2c/d2/0f2cd2eb5eaf3bcea18a0dfafd96cbca.jpg" alt="image"></p>
+<h1 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h1><h2 id="1-初始化被依赖的模块"><a href="#1-初始化被依赖的模块" class="headerlink" title="1.初始化被依赖的模块"></a>1.初始化被依赖的模块</h2><p>如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了<br>那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了</p>
+<h2 id="2-注入到依赖模块中"><a href="#2-注入到依赖模块中" class="headerlink" title="2.注入到依赖模块中"></a>2.注入到依赖模块中</h2><p>被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？</p>
+<p>有两种方式：</p>
+<p>. 自己去问</p>
+<p>. 别人主动给你</p>
+<p>没用依赖注入模式的话是1，用了之后就是2</p>
+<p>想想，你需要某个东西的时候，你去找别人要，你需要提供别人什么信息？最简单的就是那个东西叫什么，即你需要提供一个名称。</p>
+<p>所以，方式1的问题是：依赖模块耦合了被依赖模块的【名称】还有那个【别人】</p>
+<p>而方式2解决了这个问题，让依赖模块只依赖需要的模块的接口。</p>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><pre><code>`
+    var injector={
+
+dependencies:{},//存储依赖
+
+register:function(key,value){
+
+    this.dependencies[key]=value
+
+   //注册
+},
+resolve:function(deps,func,scope){
+
+    var paramNames = this.getParamNames(func);//获取函数的参数
+
+    var params = [];
+
+        for (var i = 0; i &lt; paramNames.length; i++) {
+
+            let d = paramNames[i] 
+
+            let depen = this.dependencies[d] || deps[i] 
+
+            if (depen) { 
+
+                params.push(depen) 
+
+            } else { 
+
+                throw new Error(&apos;缺失的依赖：&apos; + d) 
+
+            }
+
+        }
+      return func.apply(scope || {}, params)
+
+     getParamNames: function (func) { // 获取方法的参数名字
+
+         var paramNames = func.toString().match(/^functions*[^(]*(s*([^)]*))/m)[1] 
+
+            paramNames = paramNames.replace(/ /g, &apos;&apos;) 
+
+            paramNames = paramNames.split(&apos;,&apos;) 
+
+            return paramNames
+
+        // Array }}
+
+}
+
+
+`
+</code></pre><p><strong>调用</strong></p>
+<p>//injector.register(‘notebook’, new Notebook()) // 注册notebook</p>
+<p>   //injector.register(‘pencil’, new Pencil()) // 注册pencilvar</p>
+<p>   //school = new School()  </p>
+<p>   //var student = new Student()// 以参数的形式传入school</p>
+<p>   //var studentWrite = injector.resolve([, , school], student.write, student)</p>
+<p>   //console.log(   studentWrite) // “我拥有School、Pencil和Notebook”</p>
+<p><strong>register</strong></p>
+<p>就是将依赖的模块加载到<strong>dependencies</strong>中。</p>
+<p><strong>resolve</strong></p>
+<p>就是通过获取回调函数的参数的名字，去dependencies匹配到正确的依赖。</p>
+<h1 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h1><p>调取函数的时候，其实就是在回调函数里面写需要执行的方法。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/01/依赖注入/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
     <article id="post-判断一个对象是否是数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -346,7 +493,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
         		</li>
       		
 		</ul>
@@ -423,7 +570,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
         		</li>
       		
 		</ul>
@@ -861,83 +1008,6 @@
 
 
   
-    <article id="post-fixed背景图固定兼容性bug" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/19/fixed背景图固定兼容性bug/">fixed背景图固定兼容性bug</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/19/fixed背景图固定兼容性bug/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:33:28.180Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1505812600729&amp;di=5965954f04945db5b8bec826be0e434c&amp;imgtype=0&amp;src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fb%2F573aafd23668c.jpg" alt="image"></p>
-<h2 id="fixed背景图固定兼容性bug"><a href="#fixed背景图固定兼容性bug" class="headerlink" title="fixed背景图固定兼容性bug"></a>fixed背景图固定兼容性bug</h2><p>移动端对background-attachment: fixed的兼容性不好可以这样：<br>
-        
-          <a class="article-more-a" href="/2017/09/19/fixed背景图固定兼容性bug/#more"></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/19/fixed背景图固定兼容性bug/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1043,11 +1113,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">node</a>
+                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">node开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">node</a>
               </li>
             
             <div class="clearfix"></div>

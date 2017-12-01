@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
-  <title>Archives | HongJ前端博客</title>
+  <title>依赖注入 | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HongJ前端博客">
-<meta property="og:url" content="http://hongj.top/archives/index.html">
+  <meta name="description" content="依赖注入1.初始化被依赖的模块如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了 2.注入到依赖模块中被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？ 有两种方式： . 自己去问 . 别人主动给你 没用依赖注入模式的话是1，用了之后就是2 想想，你需要某个东西的时候，你去找别人要，你需要提供别人什">
+<meta name="keywords" content="前端开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="依赖注入">
+<meta property="og:url" content="http://hongj.top/2017/12/01/依赖注入/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
+<meta property="og:description" content="依赖注入1.初始化被依赖的模块如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了 2.注入到依赖模块中被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？ 有两种方式： . 自己去问 . 别人主动给你 没用依赖注入模式的话是1，用了之后就是2 想想，你需要某个东西的时候，你去找别人要，你需要提供别人什">
+<meta property="og:image" content="http://up.enterdesk.com/edpic_source/0f/2c/d2/0f2cd2eb5eaf3bcea18a0dfafd96cbca.jpg">
+<meta property="og:updated_time" content="2017-12-01T08:42:49.820Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HongJ前端博客">
+<meta name="twitter:title" content="依赖注入">
+<meta name="twitter:description" content="依赖注入1.初始化被依赖的模块如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了 2.注入到依赖模块中被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？ 有两种方式： . 自己去问 . 别人主动给你 没用依赖注入模式的话是1，用了之后就是2 想想，你需要某个东西的时候，你去找别人要，你需要提供别人什">
+<meta name="twitter:image" content="http://up.enterdesk.com/edpic_source/0f/2c/d2/0f2cd2eb5eaf3bcea18a0dfafd96cbca.jpg">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
   
@@ -149,36 +156,134 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-依赖注入" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/01/依赖注入/" class="archive-article-date">
-  	<time datetime="2017-12-01T08:42:49.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/01/依赖注入/">依赖注入</a>
+    <h1 class="article-title" itemprop="name">
+      依赖注入
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/12/01/依赖注入/" class="archive-article-date">
+  	<time datetime="2017-12-01T08:42:49.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://up.enterdesk.com/edpic_source/0f/2c/d2/0f2cd2eb5eaf3bcea18a0dfafd96cbca.jpg" alt="image"></p>
+<h1 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h1><h2 id="1-初始化被依赖的模块"><a href="#1-初始化被依赖的模块" class="headerlink" title="1.初始化被依赖的模块"></a>1.初始化被依赖的模块</h2><p>如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了<br>那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了</p>
+<h2 id="2-注入到依赖模块中"><a href="#2-注入到依赖模块中" class="headerlink" title="2.注入到依赖模块中"></a>2.注入到依赖模块中</h2><p>被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？</p>
+<p>有两种方式：</p>
+<p>. 自己去问</p>
+<p>. 别人主动给你</p>
+<p>没用依赖注入模式的话是1，用了之后就是2</p>
+<p>想想，你需要某个东西的时候，你去找别人要，你需要提供别人什么信息？最简单的就是那个东西叫什么，即你需要提供一个名称。</p>
+<p>所以，方式1的问题是：依赖模块耦合了被依赖模块的【名称】还有那个【别人】</p>
+<p>而方式2解决了这个问题，让依赖模块只依赖需要的模块的接口。</p>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><pre><code>`
+    var injector={
+
+dependencies:{},//存储依赖
+
+register:function(key,value){
+
+    this.dependencies[key]=value
+
+   //注册
+},
+resolve:function(deps,func,scope){
+
+    var paramNames = this.getParamNames(func);//获取函数的参数
+
+    var params = [];
+
+        for (var i = 0; i &lt; paramNames.length; i++) {
+
+            let d = paramNames[i] 
+
+            let depen = this.dependencies[d] || deps[i] 
+
+            if (depen) { 
+
+                params.push(depen) 
+
+            } else { 
+
+                throw new Error(&apos;缺失的依赖：&apos; + d) 
+
+            }
+
+        }
+      return func.apply(scope || {}, params)
+
+     getParamNames: function (func) { // 获取方法的参数名字
+
+         var paramNames = func.toString().match(/^functions*[^(]*(s*([^)]*))/m)[1] 
+
+            paramNames = paramNames.replace(/ /g, &apos;&apos;) 
+
+            paramNames = paramNames.split(&apos;,&apos;) 
+
+            return paramNames
+
+        // Array }}
+
+}
+
+
+`
+</code></pre><p><strong>调用</strong></p>
+<p>//injector.register(‘notebook’, new Notebook()) // 注册notebook</p>
+<p>   //injector.register(‘pencil’, new Pencil()) // 注册pencilvar</p>
+<p>   //school = new School()  </p>
+<p>   //var student = new Student()// 以参数的形式传入school</p>
+<p>   //var studentWrite = injector.resolve([, , school], student.write, student)</p>
+<p>   //console.log(   studentWrite) // “我拥有School、Pencil和Notebook”</p>
+<p><strong>register</strong></p>
+<p>就是将依赖的模块加载到<strong>dependencies</strong>中。</p>
+<p><strong>resolve</strong></p>
+<p>就是通过获取回调函数的参数的名字，去dependencies匹配到正确的依赖。</p>
+<h1 id="ps"><a href="#ps" class="headerlink" title="ps:"></a>ps:</h1><p>调取函数的时候，其实就是在回调函数里面写需要执行的方法。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinma.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -190,364 +295,124 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/22/判断一个对象是否是数组/" class="archive-article-date">
-  	<time datetime="2017-11-22T07:47:28.677Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/22/判断一个对象是否是数组/">判断一个对象是否是数组</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2017/12/01/依赖注入/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/17/微信公众号开发（一基础配置）/" class="archive-article-date">
-  	<time datetime="2017-11-17T05:43:34.942Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/22/判断一个对象是否是数组/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">判断一个对象是否是数组</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/17/微信公众号开发（一基础配置）/">微信公众号开发（一基础配置）</a>
-    </h1>
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDcyMC83Mjc0">
+    <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+    </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（三）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:59:21.778Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（三）/">全栈项目填坑（三）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（二）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:40:25.805Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（二）/">全栈项目填坑（二）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（一）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:11:15.740Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（一）/">全栈项目填坑（一）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/02/node基础（上）/" class="archive-article-date">
-  	<time datetime="2017-11-02T08:54:00.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/02/node基础（上）/">node 基础（上）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">node开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/31/浏览器的渲染原理简介/" class="archive-article-date">
-  	<time datetime="2017-10-31T06:33:49.446Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/31/浏览器的渲染原理简介/">浏览器的渲染原理简介</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/25/setTimeout的总结/" class="archive-article-date">
-  	<time datetime="2017-10-25T08:04:23.613Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/25/setTimeout的总结/">setTImeout中的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/20/es6常用特性/" class="archive-article-date">
-  	<time datetime="2017-09-20T07:00:42.742Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/es6常用特性/">es6常用特性总结（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -571,8 +436,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

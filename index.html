@@ -151,6 +151,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-vue响应式原理（object（数组）的坑）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/04/vue响应式原理（object（数组）的坑）/">vue响应式原理（object（数组）的坑）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/04/vue响应式原理（object（数组）的坑）/" class="archive-article-date">
+  	<time datetime="2017-12-04T09:21:10.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://up.enterdesk.com/edpic_source/f8/06/c0/f806c06d00238a0f5f39260e17a6bd9e.jpg" alt="image"></p>
+<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>一次在项目中，在data中设置的是数组，点击之后数组里面的值发生了变化并没有在view层更新，而通过console打印发现数据确实更新了，只是</p>
+<p>view层没有及时的检测到，而我一直以来的想法就是： 既然vue实现的时数据双向绑定，那么在model层发生了变化之后为什么就没有在view层更新</p>
+<p>呢?  </p>
+<p>然后我将整个data数组都获取，然后清空我要变化的项就可以了，这是为什么？？</p>
+        
+          <a class="article-more-a" href="/2017/12/04/vue响应式原理（object（数组）的坑）/#more"></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/04/vue响应式原理（object（数组）的坑）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
     <article id="post-依赖注入" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -869,83 +949,6 @@
 
 
   
-    <article id="post-es6常用特性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/20/es6常用特性/">es6常用特性总结（一）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/20/es6常用特性/" class="archive-article-date">
-  	<time datetime="2017-09-20T07:00:42.742Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1505903733813&amp;di=042c48166b2220cda2ee7642243a734d&amp;imgtype=0&amp;src=http%3A%2F%2Fimg1.3lian.com%2F2015%2Fa1%2F105%2Fd%2F4.jpg" alt="image"></p>
-<h2 id="es6常用特性总结（一）"><a href="#es6常用特性总结（一）" class="headerlink" title="es6常用特性总结（一）"></a>es6常用特性总结（一）</h2><p>参考网址：<a href="http://www.cnblogs.com/MuYunyun/p/6235325.html#_labelTop" target="_blank" rel="external">是云随风</a><br>以及<a href="http://es6.ruanyifeng.com/#README" target="_blank" rel="external">大神的es6教程</a><br>
-        
-          <a class="article-more-a" href="/2017/09/20/es6常用特性/#more"></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/20/es6常用特性/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1043,6 +1046,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -1052,10 +1059,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">node开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
-  <title>Archives | HongJ前端博客</title>
+  <title>vue响应式原理（object（数组）的坑） | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HongJ前端博客">
-<meta property="og:url" content="http://hongj.top/archives/page/2/index.html">
+  <meta name="description" content="写在前面一次在项目中，在data中设置的是数组，点击之后数组里面的值发生了变化并没有在view层更新，而通过console打印发现数据确实更新了，只是 view层没有及时的检测到，而我一直以来的想法就是： 既然vue实现的时数据双向绑定，那么在model层发生了变化之后为什么就没有在view层更新 呢?   然后我将整个data数组都获取，然后清空我要变化的项就可以了，这是为什么？？">
+<meta name="keywords" content="前端开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue响应式原理（object（数组）的坑）">
+<meta property="og:url" content="http://hongj.top/2017/12/04/vue响应式原理（object（数组）的坑）/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
+<meta property="og:description" content="写在前面一次在项目中，在data中设置的是数组，点击之后数组里面的值发生了变化并没有在view层更新，而通过console打印发现数据确实更新了，只是 view层没有及时的检测到，而我一直以来的想法就是： 既然vue实现的时数据双向绑定，那么在model层发生了变化之后为什么就没有在view层更新 呢?   然后我将整个data数组都获取，然后清空我要变化的项就可以了，这是为什么？？">
+<meta property="og:image" content="http://up.enterdesk.com/edpic_source/f8/06/c0/f806c06d00238a0f5f39260e17a6bd9e.jpg">
+<meta property="og:updated_time" content="2017-12-04T09:21:10.084Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HongJ前端博客">
+<meta name="twitter:title" content="vue响应式原理（object（数组）的坑）">
+<meta name="twitter:description" content="写在前面一次在项目中，在data中设置的是数组，点击之后数组里面的值发生了变化并没有在view层更新，而通过console打印发现数据确实更新了，只是 view层没有及时的检测到，而我一直以来的想法就是： 既然vue实现的时数据双向绑定，那么在model层发生了变化之后为什么就没有在view层更新 呢?   然后我将整个data数组都获取，然后清空我要变化的项就可以了，这是为什么？？">
+<meta name="twitter:image" content="http://up.enterdesk.com/edpic_source/f8/06/c0/f806c06d00238a0f5f39260e17a6bd9e.jpg">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
   
@@ -149,291 +156,220 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-vue响应式原理（object（数组）的坑）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue响应式原理（object（数组）的坑）
+    </h1>
+  
+
+        
+        <a href="/2017/12/04/vue响应式原理（object（数组）的坑）/" class="archive-article-date">
+  	<time datetime="2017-12-04T09:21:10.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-04</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://up.enterdesk.com/edpic_source/f8/06/c0/f806c06d00238a0f5f39260e17a6bd9e.jpg" alt="image"></p>
+<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>一次在项目中，在data中设置的是数组，点击之后数组里面的值发生了变化并没有在view层更新，而通过console打印发现数据确实更新了，只是</p>
+<p>view层没有及时的检测到，而我一直以来的想法就是： 既然vue实现的时数据双向绑定，那么在model层发生了变化之后为什么就没有在view层更新</p>
+<p>呢?  </p>
+<p>然后我将整个data数组都获取，然后清空我要变化的项就可以了，这是为什么？？</p>
+<a id="more"></a>
+<h1 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h1><p>当你把一个普通的 JavaScript 对象传给 Vue 实例的 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty </p>
+<p>把这些属性全部转为 getter/setter。Object.defineProperty 是 ES5 中一个无法 shim 的特性，这也就是为什么 Vue 不支持 IE8 以及更</p>
+<p>低版本浏览器的原因。所以变量必须在data处进行声明，就算是空的也得声明！否则会报错！</p>
+<p><strong>PS： 如果声明的是空的数组或者对象，那么当点击对这个对象或者数组进行添加的时候，页面也会发生无法渲染陈宫，原因是vue没有将属性转换<br>成访问器属性。</strong></p>
+<p>受现代 JavaScript 的限制 (以及废弃 Object.observe)，Vue 不能检测到对象属性的添加或删除。由于 Vue 会在初始化实例时对属性执行</p>
+<p> getter/setter 转化过程，所以属性必须在 data 对象上存在才能让 Vue 转换它，这样才能让它是响应的。</p>
+<h2 id="发生无法渲染的原因"><a href="#发生无法渲染的原因" class="headerlink" title="发生无法渲染的原因"></a>发生无法渲染的原因</h2><p>Vue 不允许在已经创建的实例上动态添加新的根级响应式属性。</p>
+<h2 id="那为什么当我获取整个数组进行修改的时候就成功呢？"><a href="#那为什么当我获取整个数组进行修改的时候就成功呢？" class="headerlink" title="那为什么当我获取整个数组进行修改的时候就成功呢？"></a>那为什么当我获取整个数组进行修改的时候就成功呢？</h2><p>原因是那时候修改的是整个数组，不是根级响应式属性，这样会触发一个watcher，然后将事件添加到一个队列中，这时我们在对数组的属性进行修改</p>
+<p>的时候继续将这个变动放入队列中（<strong>有点类似防抖</strong>）当不变化时候触发setter，这时候就会实现数据的在view上的更新。</p>
+<h2 id="上述两个问题的解决办法"><a href="#上述两个问题的解决办法" class="headerlink" title="上述两个问题的解决办法"></a>上述两个问题的解决办法</h2><p>一、</p>
+<p> `<br>    Vue.set(vm.someObject, ‘b’, 2)//修改的数组，key，value</p>
+<pre><code>this.$set(this.someObject,&apos;b&apos;,2)//修改的数组，key，value
+
+`
+</code></pre><p>二、</p>
+<p>有时你想向已有对象上添加一些属性，例如使用 Object.assign() 或 _.extend() 方法来添加属性。但是，添加到对象上的新属性不会触发更</p>
+<p>新。在这种情况下可以创建一个新的对象，让它包含原对象的属性和新的属性：</p>
+<pre><code>`
+
+    // 代替 `Object.assign(this.someObject, { a: 1, b: 2 })`
+
+    this.someObject = Object.assign({}, this.someObject, { a: 1, b: 2 })
+
+`
+</code></pre><p>参考地址：<a href="https://cn.vuejs.org/v2/guide/reactivity.html" target="_blank" rel="external">https://cn.vuejs.org/v2/guide/reactivity.html</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinma.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/20/es6常用特性/" class="archive-article-date">
-  	<time datetime="2017-09-20T07:00:42.742Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/es6常用特性/">es6常用特性总结（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端开发</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/fixed背景图固定兼容性bug/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:33:28.180Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/fixed背景图固定兼容性bug/">fixed背景图固定兼容性bug</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2017/12/04/vue响应式原理（object（数组）的坑）/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/三栏布局/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:19:12.745Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/01/依赖注入/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">依赖注入</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/三栏布局/">三栏布局</a>
-    </h1>
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDcyMC83Mjc0">
+    <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+    </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/08/常用黑科技/" class="archive-article-date">
-  	<time datetime="2017-09-08T02:39:32.628Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/08/常用黑科技/">前端常用属性、方法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/07/组件化/" class="archive-article-date">
-  	<time datetime="2017-09-07T01:13:24.760Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/07/组件化/">前端组件化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/06/模块化/" class="archive-article-date">
-  	<time datetime="2017-09-06T07:53:01.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/模块化/">前端模块化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/06/First-Artical/" class="archive-article-date">
-  	<time datetime="2017-09-06T04:00:48.214Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/First-Artical/">在路上</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -457,8 +393,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

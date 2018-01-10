@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://hongj.top">
   <title>vue组件面向对象的应用（一） | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面（一）在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？">
+  <meta name="description" content="#写在前面（一） # 在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？">
 <meta name="keywords" content="前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue组件面向对象的应用（一）">
 <meta property="og:url" content="http://hongj.top/2018/01/10/vue组件面向对象的应用/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
-<meta property="og:description" content="写在前面（一）在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？">
+<meta property="og:description" content="#写在前面（一） # 在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？">
 <meta property="og:image" content="http://up.enterdesk.com/edpic_source/0d/de/16/0dde16ff178d9fee20ad0e77a01f6b1e.jpg">
-<meta property="og:updated_time" content="2018-01-10T06:53:34.661Z">
+<meta property="og:updated_time" content="2018-01-10T07:06:03.623Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue组件面向对象的应用（一）">
-<meta name="twitter:description" content="写在前面（一）在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？">
+<meta name="twitter:description" content="#写在前面（一） # 在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？">
 <meta name="twitter:image" content="http://up.enterdesk.com/edpic_source/0d/de/16/0dde16ff178d9fee20ad0e77a01f6b1e.jpg">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
@@ -177,17 +177,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="http://up.enterdesk.com/edpic_source/0d/de/16/0dde16ff178d9fee20ad0e77a01f6b1e.jpg" alt="image"></p>
-<h2 id="写在前面（一）"><a href="#写在前面（一）" class="headerlink" title="写在前面（一）"></a>写在前面（一）</h2><p>在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？</p>
+<p>#写在前面（一） #</p>
+<p>在用vue框架中我们离不开组件，组件化的目的就是复用代码。但是怎么服用呢？</p>
 <a id="more"></a>
-<p>###（一）了解面向对象###</p>
+<p>##（二）了解面向对象##</p>
 <p>面向对象编程就是将你的需求抽象成一个对象，然后针对这个对象分析其特征（属性）与动作（方法）。</p>
 <p>面向对象编程的一个特点就是封装，就是把你需要的功能放在一个对象里！</p>
-<p>###（一）思路###</p>
+<p>##（三）思路##</p>
 <p>1、这里以header组件为例</p>
 <p>2、每个页面都有header，而且每个页面的样子都差不多，所以就把header封装成组件。不同的页面通过传入不同的参数而满足需求。</p>
 <p>3、接口的参数要统一。每个页面的header都是一个实例化，来让接口统一</p>
 <p>4、传入参数尽可能灵活，传入什么属性，什么属性就生效，没传的就走默认，所以参数是不定的！所以这里用的es6的…语法，参数的格式以对象的形式。</p>
-<p>###（二）DEMO###</p>
+<p>##（四）DEMO##</p>
 <pre><code>   `
     const headerData= class header {
           //middleLogoShow,leftMenuShow,middleTextShow,rightBack
@@ -215,7 +216,7 @@
 </code></pre><p><strong>PS:</strong></p>
 <p><strong>1、Object.keys和Object.values得到的是数组注意转化</strong></p>
 <p><strong>2、如果到处多个接口直接在export default {headerData}里加</strong></p>
-<p>###（三）用法###</p>
+<p>##（五）用法##</p>
 <pre><code>`
     &lt;HeaderView :headerData=&quot;headerData1&quot;&gt;&lt;/HeaderView&gt;
 
@@ -510,15 +511,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">前端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -526,7 +527,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">前端开发</a>
+                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
               </li>
             
             <div class="clearfix"></div>

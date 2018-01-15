@@ -6,6 +6,7 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
+  <link rel="manifest" href="../../source/manifest.json">
   <title>依赖注入 | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="依赖注入1.初始化被依赖的模块如果不通过依赖注入模式来初始化被依赖的模块，那么就要依赖模块自己去初始化了那么问题来了：依赖模块就耦合了被依赖模块的初始化信息了 2.注入到依赖模块中被依赖模块已经被其他管理器初始化了，那么依赖模块要怎么获取这个模块呢？ 有两种方式： . 自己去问 . 别人主动给你 没用依赖注入模式的话是1，用了之后就是2 想想，你需要某个东西的时候，你去找别人要，你需要提供别人什">
@@ -516,15 +517,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">前端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,7 +525,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">node开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

@@ -7,14 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
   <link rel="manifest" href="/manifest.json">
-  <title>Archives: 2017 | HongJ前端博客</title>
+  <title>设计模式 | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HongJ前端博客">
-<meta property="og:url" content="http://hongj.top/archives/2017/page/2/index.html">
+  <meta name="description" content="设计模式（创建型）">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://hongj.top/2018/01/19/设计模式（创建型)/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
+<meta property="og:description" content="设计模式（创建型）">
+<meta property="og:updated_time" content="2018-01-19T10:01:40.166Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HongJ前端博客">
+<meta name="twitter:title" content="设计模式">
+<meta name="twitter:description" content="设计模式（创建型）">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
   
@@ -150,36 +155,370 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-设计模式（创建型)" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      设计模式
+    </h1>
+  
+
+        
+        <a href="/2018/01/19/设计模式（创建型)/" class="archive-article-date">
+  	<time datetime="2018-01-19T06:31:21.881Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="" alt="image"></p>
+<h2 id="设计模式（创建型）"><a href="#设计模式（创建型）" class="headerlink" title="设计模式（创建型）"></a>设计模式（创建型）</h2><a id="more"></a>
+<p>##（一）简单工厂模式##</p>
+<p>这种模式是说假如有三个类，每次创建都要找到对应的三个类，这样太麻烦，所以我们需要把这三个类封装到一个函数里，不知道人只需要记住这个函数的名字就可以使用了。</p>
+<p>例如</p>
+<pre><code>`
+
+    let PopFactory=function(name){
+
+        switch(name){
+
+            case &apos;alert&apos;:
+
+               return new LoginAlert();
+
+            case &apos;confirm&apos;:
+
+               return new LoginConfirm();
+
+            case &apos;prompt&apos;:
+
+               return new LoginPrompt();
+
+        }
+   }
+
+`
+</code></pre><p><strong>PS：</strong></p>
+<p>三个返回函数返回不同的实例子，这样我们就不用记住，这三个构造函数的名字，直接使用参数传入想要的功能，就可以了！</p>
+<p>这种方法是创建不同类的方法。</p>
+<p>还有一种是创建相同类的方法，就是抽象出相同点，特殊处理不同点——在构造函数中进行判断。</p>
+<p>例子</p>
+<pre><code>`
+
+
+
+        function createPop(){
+
+            let o= new Object();
+
+            o.content=text;
+
+            o.show=function(){
+
+            }
+
+            if(type==&apos;alert&apos;){
+
+            } 
+            if(type==&apos;confirm&apos;){
+
+            } 
+            if(type==&apos;prompt&apos;){
+
+            } 
+
+            return o
+       }
+
+`
+</code></pre><p>##（二）工厂方法模式模式##</p>
+<p>通过工厂方法模式我们可以轻松创建多个类的实例的对象，这样创建对象的方式避免了使用者与对象类之间的关联，用户不用关心创建对象的具体类，只需调用工厂方法即可！！</p>
+<p>不知道的人可能会错误的调用工厂方法（没有new，this指向window）,所以采用安全模式！！</p>
+<pre><code>`
+
+    //安全模式创建的工厂安全类，防止调取函数的时候没new,导致报错
+
+        let Factory = function(type,content){
+
+                 //判断this。指向，如果指向window那么重新实例化工厂函数
+
+                if(this instanceof Factory){
+
+                   let s=new this[type](content);
+
+                   return s
+
+                }else{
+
+                    return new Factory(type,content)
+                }
+        }
+
+
+
+
+        Factory.Prorotype={
+
+            Java:function(content){
+
+            },
+            JavaScript:function(content){
+
+            }
+        }
+
+
+        //数据
+        let data={
+
+            type:&apos;Java&apos;,content:&apos;2133asdsad&apos;,
+
+            type:&apos;JavaScript&apos;,content:&apos;gfgew123&apos;
+        }
+
+
+        //用的时候
+
+        for(var i=0;i&lt;=2;i++){
+
+            Factory(s[i].type,s[i].content)
+
+        }
+
+
+`
+</code></pre><p>##（二）幽灵工厂——抽象工厂模式##</p>
+<p>这种模式主要作用不是创建对象，，主要用在继承上，因为定义了一种类，并定义了该类所必备的所有方法，如果在子类中没有重写这些方法，</p>
+<p>那么方调用时如果可以找到这些方法就会报错！</p>
+<p>这是抽象类的主要作用：定义一个产品簇，并声明一些必备方法，如果子类中没有去重写就会抛出错误！</p>
+<p><strong>定义一个抽象类：</strong></p>
+<pre><code>`
+
+    let bus=function(){};
+
+    bus.prototype={
+
+        getPrice:function(){
+
+            return new Error(&apos;抽象方法不能调用&apos;);
+
+        }，
+        getSpeed:function(){
+
+            return new Error(&apos;抽象方法不能调用&apos;);
+
+        }
+
+    }
+
+`
+</code></pre><p><strong>抽象工厂模式例子</strong></p>
+<pre><code>`
+
+//抽象工厂模式
+
+ //让子类继承父累
+
+let VehicleFactory=function(subType,superType){
+
+    //判断抽象工厂是否有该抽象类
+
+    if(typeof VehicleFactory[superType]===&apos;function&apos;){
+
+        //缓存类
+
+        function F(){};
+
+        F.prototype=new VehicleFactory[superType]();
+
+        //将子类constructor指向子类
+
+        subType.constructor=subType;
+
+        //子类继承父类原型
+
+        subType.prototype=new F();
+
+    }else{
+
+        //不存在该抽象类抛出错误
+
+        throw new Error(&apos;未创建抽象类&apos;)
+
+    }
+
+    }
+
+
+    //汽车抽象类
+
+    VehicleFactory.car=function(){
+
+        this.type=&apos;car&apos;;
+
+    };
+    VehicleFactory.car.prototype={
+
+        getPrice:function(){
+
+            return new Error(&apos;抽象方法不能调用&apos;);
+
+        }，
+        getSpeed:function(){
+
+            return new Error(&apos;抽象方法不能调用&apos;);
+
+        }
+    }
+
+
+
+
+    //使用
+
+    let BMW=function(price,speed){
+
+        this.price=price;
+
+        this.speed=speed;
+
+    }
+
+    //抽象工厂实现对car抽象类的继承
+
+    VehicleFactory(BMW,&apos;car&apos;)
+
+    BMW.prototype.getPrice=function(){
+
+        return this.price
+    }
+    BMW.prototype.getSpeed=function(){
+
+        return this.speed
+    }
+
+
+
+    //var truck =new BMW(1000000,300)
+
+
+`
+</code></pre><p>##（三）建造者模式##</p>
+<p>工厂模式主要关心的是结果，建造者模式主要关心的是过程。一般用于构件符合对象！</p>
+<pre><code>`
+
+    //建造者模式
+
+    var Person=function(name,work){
+        //创建应聘者缓存对象
+        var _person=new Human();
+        //创建姓名
+           _person.name=new Named(name)
+        //创建应聘者期望职位
+          _person.work=new Work(work);
+
+        return _person
+    }
+
+`
+</code></pre><p>##（四）原型模式##</p>
+<p>原型模式就是将可复用的、可共享的、耗时大的从基类中提取出来，然后放在其原型上，然后子类通过组合式继承，或者寄生式继承而将方法和属性继承下来，对于子类中</p>
+<p>那些重要的方法进行重写，这样子类创建的对象就拥有基类的原型方法同时又有子类的属性和方法。</p>
+<p>##（四）单例/单体模式##</p>
+<p>单例模式：是只允许实例化一次的对象类；</p>
+<p>主要用于：</p>
+<p>1、命名空间。</p>
+<p>2、管理代码库的各个模块（YUI、Jquery）</p>
+<p>3、管理静态变量</p>
+<pre><code>`
+
+    //单例管理静态变量
+
+
+    let conf=(function(){
+        //私有变量
+        let conf={
+            MAX_NUM:100,
+            coUNT:100
+        }
+        //返回取值器
+         return{
+            get:function(name){
+                return conf[name]?conf[name]:null;
+            }
+         }
+    })
+
+    //这样如果没有取值器 就无法改变静态变量的值了
+
+`
+</code></pre><p>4、惰性单例</p>
+<p>利用闭包自执行函数将单例保存到闭包中</p>
+<pre><code>`
+
+    //惰性加载
+     var LazySINGLE=(function(){
+
+        //单例实例引用
+       var _install=null;
+       //单例
+       function single(){
+
+       //定义私有属性和方法
+        return {
+            publicMethod:function(){},
+            publicaProOERTY:&apos;1.0&apos;
+        }
+       }
+        获取单例接口
+       return function(){
+       if(!_install){
+       _install=single();
+       }
+       //返回单例
+       return _install
+       }
+     })();
+
+`
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinma.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/20/es6常用特性/" class="archive-article-date">
-  	<time datetime="2017-09-20T07:00:42.742Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/20/es6常用特性/">es6常用特性总结（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,250 +530,124 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/fixed背景图固定兼容性bug/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:33:28.180Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/fixed背景图固定兼容性bug/">fixed背景图固定兼容性bug</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2018/01/19/设计模式（创建型)/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/19/三栏布局/" class="archive-article-date">
-  	<time datetime="2017-09-19T06:19:12.745Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/10/vue组件面向对象的应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">vue组件面向对象的应用（一）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/19/三栏布局/">三栏布局</a>
-    </h1>
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDcyMC83Mjc0">
+    <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+    </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/08/常用黑科技/" class="archive-article-date">
-  	<time datetime="2017-09-08T02:39:32.628Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/08/常用黑科技/">前端常用属性、方法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/07/组件化/" class="archive-article-date">
-  	<time datetime="2017-09-07T01:13:24.760Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/07/组件化/">前端组件化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/06/模块化/" class="archive-article-date">
-  	<time datetime="2017-09-06T07:53:01.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/模块化/">前端模块化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/06/First-Artical/" class="archive-article-date">
-  	<time datetime="2017-09-06T04:00:48.214Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/06/First-Artical/">在路上</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2017/">&laquo; Prev</a><a class="page-number" href="/archives/2017/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -458,8 +671,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

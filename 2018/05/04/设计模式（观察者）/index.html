@@ -7,21 +7,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hongj.top">
   <link rel="manifest" href="/manifest.json">
-  <title>全栈项目填坑（二） | HongJ前端博客</title>
+  <title>设计模式 | HongJ前端博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、 axios">
-<meta name="keywords" content="node">
+  <meta name="description" content="设计模式（观察者）">
+<meta name="keywords" content="前端">
 <meta property="og:type" content="article">
-<meta property="og:title" content="全栈项目填坑（二）">
-<meta property="og:url" content="http://hongj.top/2017/11/10/全栈项目填坑（二）/index.html">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://hongj.top/2018/05/04/设计模式（观察者）/index.html">
 <meta property="og:site_name" content="HongJ前端博客">
-<meta property="og:description" content="一、 axios">
-<meta property="og:image" content="http://up.enterdesk.com/edpic_source/ff/19/de/ff19de5b25fd716fb0405e512b5d1158.jpg">
-<meta property="og:updated_time" content="2017-11-23T03:32:42.086Z">
+<meta property="og:description" content="设计模式（观察者）">
+<meta property="og:image" content="http://pic1.win4000.com/wallpaper/2017-10-19/59e833e9527bf.jpg">
+<meta property="og:updated_time" content="2018-05-04T03:14:22.757Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="全栈项目填坑（二）">
-<meta name="twitter:description" content="一、 axios">
-<meta name="twitter:image" content="http://up.enterdesk.com/edpic_source/ff/19/de/ff19de5b25fd716fb0405e512b5d1158.jpg">
+<meta name="twitter:title" content="设计模式">
+<meta name="twitter:description" content="设计模式（观察者）">
+<meta name="twitter:image" content="http://pic1.win4000.com/wallpaper/2017-10-19/59e833e9527bf.jpg">
   
     <link rel="alternative" href="/atom.xml" title="HongJ前端博客" type="application/atom+xml">
   
@@ -157,114 +157,135 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-全栈项目填坑（二）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-设计模式（观察者）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      全栈项目填坑（二）
+      设计模式
     </h1>
   
 
         
-        <a href="/2017/11/10/全栈项目填坑（二）/" class="archive-article-date">
-  	<time datetime="2017-11-10T09:40:25.805Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-10</time>
+        <a href="/2018/05/04/设计模式（观察者）/" class="archive-article-date">
+  	<time datetime="2018-05-04T03:01:24.520Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://up.enterdesk.com/edpic_source/ff/19/de/ff19de5b25fd716fb0405e512b5d1158.jpg" alt="image"></p>
-<h1 id="一、-axios"><a href="#一、-axios" class="headerlink" title="一、 axios"></a>一、 axios</h1><a id="more"></a>
-<pre><code>`
-        //http.js
+        <p><img src="http://pic1.win4000.com/wallpaper/2017-10-19/59e833e9527bf.jpg" alt="image"></p>
+<h2 id="设计模式（观察者）"><a href="#设计模式（观察者）" class="headerlink" title="设计模式（观察者）"></a>设计模式（观察者）</h2><a id="more"></a>
+<p>##观察者##</p>
+<p>这是一种创建松散耦合代码的技术。它定义对象间 一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。</p>
+<p>由主体和观察者组成，主体负责发布事件，同时观察者通过订阅这些事件来观察该主体。主体并不知道观察者的任何事情，观察者知道主体并能注册事件的回调函数。</p>
+<h2 id="（一）主要涉及的结构有"><a href="#（一）主要涉及的结构有" class="headerlink" title="（一）主要涉及的结构有"></a>（一）主要涉及的结构有</h2><p>1、负责存放注册函数的数组</p>
+<p>2、注册函数</p>
+<p>3、发布函数</p>
+<p>4、销毁函数</p>
+<h2 id="（二）代码实现"><a href="#（二）代码实现" class="headerlink" title="（二）代码实现"></a>（二）代码实现</h2><pre><code>`
+    class Observe{
 
-        import axios from &apos;axios&apos;
+          constructor(){
 
-        import config1 from &apos;../config&apos;;
+            this._message={}
 
-    const instance = axios.create({
-        baseURL:config1.baseUrl,
-        headers: {
-            &apos;Content-Type&apos;: &apos;application/json&apos;
-        },
-        withCredentials:false
-    });
+         }
 
+        //订阅函数
 
+        regist(type,fn){
 
-    // http request 拦截器
-    instance.interceptors.request.use(config =&gt; {
-        if(config.method === &apos;post&apos;) {
-            if(!!localStorage.getItem(&quot;token&quot;)){
-                 config.headers.Token = localStorage.getItem(&quot;token&quot;)
-            }else{}
+        //判断函数是否订阅
 
-        }
-        return config
-    }, err =&gt; {
-        alert(&apos;错误的传参&apos;)
-        return Promise.reject(err)
-    })
+            if(typeof this._message[type] ==&quot;undefined&quot;){
 
-    // http response 拦截器
-    instance.interceptors.response.use(response =&gt; {
-        if(response.data.code==&apos;-2&apos;){
-            this.$router.push({
-                        path: &apos;/login&apos;
-                    })
-            return false
-        }
-        return response
-    }, err =&gt; {
-        if(err.response) {
-                    this.$router.push(
-                       &apos;/login&apos;
-                    )
+                this._message[type]=[fn]
+
+            }else{
+
+                this._message[type].push(fn)
+
             }
 
-        return Promise.reject(err.response.data)
-    })
-
-    export default instance
-
-`
-</code></pre><h2 id="将axios再封装"><a href="#将axios再封装" class="headerlink" title="将axios再封装"></a>将axios再封装</h2><p>   1、配置接口地址。</p>
-<p>   2、配置请求头部信息。</p>
-<h2 id="http-request-拦截器"><a href="#http-request-拦截器" class="headerlink" title="http request 拦截器"></a>http request 拦截器</h2><p>发送请求前，如果有token就像向请求的头部写入token。</p>
-<h2 id="http-response-拦截器"><a href="#http-response-拦截器" class="headerlink" title="http response 拦截器"></a>http response 拦截器</h2><p>在请求返回的时候如果token是过期的那么给他返回到登录页面。</p>
-<p>如果请求出错也给他返回到登录页面。</p>
-<h1 id="二、webpack"><a href="#二、webpack" class="headerlink" title="二、webpack"></a>二、webpack</h1><p>##1、 webpack跨域配置 ##</p>
-<p>再基础配置（就是配置output那里）里加入如下代码：</p>
-<pre><code>`            
-    devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    port: 8080,
-    proxy: {
-        &apos;*&apos;: {//匹配所有
-            target: &apos;http://localhost:3000/&apos;,//目标地址
-            changeOrigin: true,
-            secure: false
         }
-    },
-  }
+
+       //发布函数
+
+        fire(type,args){
+
+             if(!this._message[type]){
+
+                return
+
+            }else{
+
+                this.fireChunk();
+
+            }
+
+        }
+
+        //调取数组中注册过得函数
+
+        fireChunk(){
+
+               let messageLength= this._message[type].length
+
+               let events={
+
+                   type:type,
+
+                   args:args
+
+                }
+
+        //执行注册过的所有函数
+
+                for (let i= 0;i&lt;messageLength;i++){
+
+                   this._message[type][i].call(this,events);
+
+                }
+        }
+
+       //注销函数
+
+        remove(type,fn){
+
+       //判断是不是数组
+
+            if (this._message[type] instanceof Array){
+
+               let  i= this._message[type].length-1
+
+               for(;i&gt;=0;i--){
+
+                this._message[type][i]=fn&amp;&amp;this._message[type][i].slice(i,1)
+
+               }
+
+            }
+
+        }
+
+    }
+
 
 `
-</code></pre><p>##2、 webpack引入css-loder ##</p>
-<p>一般引入外部css需要配置css-loder。<br>如果在utils中有css: generateLoaders()那么就不用配置了。</p>
-<p>##3、 Vue2.0 引入外链css ##</p>
-<p>可以在最外层index.html中引入。</p>
-<p>##4、 引入外部UI ##</p>
-<p>1、下载</p>
-<p>2、在main.js中引入js和css。</p>
+</code></pre><p><strong>Demo</strong></p>
 <pre><code>`
-    import MuseUI from &apos;muse-ui&apos;
-    import &apos;../static/css/muse-ui.css&apos;;
-    Vue.use(MuseUI)
+    let observes=new Observe()
+
+    observes.regist(&apos;test&apos;,function(e){
+        console.log(e.type+e.args)
+    })
+    observes.fire(&apos;test&apos;,&apos;1231231313&apos;)
+
+    //输出test1231231313
 
 `
 </code></pre>
@@ -306,7 +327,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">node</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">前端</a>
         		</li>
       		
 		</ul>
@@ -362,7 +383,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2017/11/10/全栈项目填坑（二）/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hongj.top/2018/05/04/设计模式（观察者）/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -377,18 +398,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/11/10/全栈项目填坑（三）/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          全栈项目填坑（三）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/10/全栈项目填坑（一）/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">全栈项目填坑（一）</div>
+    <a href="/2018/01/26/浅谈前端安全/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">前端安全</div>
       <i class="icon-circle-right"></i>
     </a>
   
